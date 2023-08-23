@@ -1,41 +1,28 @@
-using Microsoft.AspNetCore.Mvc;
-using WebApplicationcontroller.Controller;
-using WebApplicationcontroller.Models;
+using System.ComponentModel.DataAnnotations;
 
-namespace WebApplicationcontroller.Controller
+namespace WebApplicationcontroller.Models
 {
-    public class RegistrationFormController :Microsoft.AspNetCore.Mvc.Controller    
+    public class RegistrationForm
     {
 
-        [Route("/register")]
-        public IActionResult form(RegistrationForm registrationForm) {
+        [Required]
+        public int Id { get; set; }
+
+        
+        public string Name { get; set; }
+
+        public string Email { get; set; }
 
 
-            Console.WriteLine(ModelState.IsValid);
+        public string Password { get; set; }
+        public string ConfirmedPassword { get; set; }
 
-            if (!ModelState.IsValid)
-            {
 
-                List<string> errorsList = new List<string>();
 
-                foreach(var value in ModelState.Values)
-                {
-                    foreach(var error in value.Errors)
-                    {
-                        Console.WriteLine(error);
-                        Console.WriteLine(error.Exception);
-                        errorsList.Add(error.ErrorMessage);
-                    }
-                }
-               string errors= string.Join("\n", errorsList.ToArray());
-                return BadRequest(errors);
-            }
-            else
-            {
-            return Content($"{ registrationForm}");
 
-            }
+        public override string ToString()
+        {
+            return $"{"ID:"}{Id}{","}{"Name:"}{Name}{Email}{Password}{ConfirmedPassword}";
         }
-
     }
 }
