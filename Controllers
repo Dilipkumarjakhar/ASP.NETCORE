@@ -1,0 +1,41 @@
+using Microsoft.AspNetCore.Mvc;
+using WebApplicationcontroller.Controller;
+using WebApplicationcontroller.Models;
+
+namespace WebApplicationcontroller.Controller
+{
+    public class RegistrationFormController :Microsoft.AspNetCore.Mvc.Controller    
+    {
+
+        [Route("/register")]
+        public IActionResult form(RegistrationForm registrationForm) {
+
+
+            Console.WriteLine(ModelState.IsValid);
+
+            if (!ModelState.IsValid)
+            {
+
+                List<string> errorsList = new List<string>();
+
+                foreach(var value in ModelState.Values)
+                {
+                    foreach(var error in value.Errors)
+                    {
+                        Console.WriteLine(error);
+                        Console.WriteLine(error.Exception);
+                        errorsList.Add(error.ErrorMessage);
+                    }
+                }
+               string errors= string.Join("\n", errorsList.ToArray());
+                return BadRequest(errors);
+            }
+            else
+            {
+            return Content($"{ registrationForm}");
+
+            }
+        }
+
+    }
+}
